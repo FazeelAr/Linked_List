@@ -20,7 +20,8 @@ int main()
 	//list.addToHead(5);
 	for (int i = 0; i < 5; i++)
 	{
-		list.addToHead(i + 5);
+		for(int j = 0; j<2;j++)
+			list.addToHead(i + 5);
 	}
 	try
 	{
@@ -34,7 +35,11 @@ int main()
 		list2.addToTail(5);
 		list2.addToTail(4);
 		list2.printList();
-		list.doUnion(list2).printList();
+		//list = list.doUnion(list2);
+		//list.printList();
+		list2.removeDuplicates();
+		cout << "\nAfter deleteing alternate nodes";
+		list2.printList();
 	}
 	catch (const char* str)
 	{

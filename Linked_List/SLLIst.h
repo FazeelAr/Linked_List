@@ -176,9 +176,35 @@ public:
 	}
 	void deleteAlterNodes()
 	{
-		for (Node<T>* iter = head; iter; iter = iter->next)
+		Node<T>* iter = head;
+		while(iter && iter->next)
 		{
-
+			Node<T>* prev = iter->next;
+			iter->next = iter->next->next;
+			delete prev;
+			iter = iter->next;
+		}
+	}
+	void removeDuplicates()
+	{
+		Node<T>* curr = head;
+		while (curr)
+		{
+			Node<T>* next = curr;
+			while (next->next)
+			{
+				if (curr->data == next->next->data)
+				{
+					Node<T>* duplicate = next->next;
+					next->next = next->next->next;
+					delete duplicate;
+				}
+				else
+				{
+					next = next->next;
+				}
+			}
+			curr = curr->next;
 		}
 	}
 };
