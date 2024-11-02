@@ -24,6 +24,37 @@ public:
 		head = nullptr;
 		tail = nullptr;
 	}
+	SLList(const SLList<T>& ref): SLList()
+	{
+		if (!ref.head || !ref.tail)
+		{
+			return;
+		}
+		Node<T>* iter = ref.head;
+		while (iter)
+		{
+			if (tail != nullptr)
+			{
+				tail->next = new Node<T>(iter->data);
+				tail = tail->next;
+			}
+			else
+			{
+				tail = head = new Node<T>(iter->data);
+			}
+			iter = iter->next;
+		}
+	}
+	~SLList()
+	{
+		while (head)
+		{
+			Node<T>* temp = head;
+			head = head->next;
+			delete temp;
+		}
+		head = tail = nullptr;
+	}
 	bool isEmpty()
 	{
 		return (head == nullptr && tail == nullptr) ? true : false;
@@ -95,15 +126,60 @@ public:
 		}
 		throw "\nList is Empty";
 	}
-	~SLList()
+	Node<T>* searchNode(T element)
 	{
-		while (head)
+		Node<T>* iter = head;
+		while (iter && iter->data != element)
 		{
-			Node<T>* temp = head;
-			head = head->next;
-			delete temp;
+			iter = iter->next;
 		}
-		head = nullptr;
+		return (iter == nullptr) ? nullptr : iter;
+	}
+	void printList()
+	{
+		cout << '\n';
+		Node<T>* iter = head;
+		while (iter)
+		{
+			cout << iter->data << ' ';
+			iter = iter->next;
+		}
+	}
+	T removeNode(T e)
+	{
+		Node<T>* iter = head, *prev = head;
+		while (iter && iter->data != e)
+		{
+			prev = iter;
+			iter = iter->next;
+		}
+		if (iter)
+		{
+			T elem = iter->data;
+			prev->next = iter->next;
+			delete iter;
+			return elem;
+		}
+		throw "\nElement not found";
+	}
+	SLList<T> doUnion(SLList<T>& list)
+	{
+		SLList<T> unionList{ *this };
+		for (Node<T>* iter = list.getHead(); iter; iter = iter->next)
+		{
+			if (unionList.searchNode(iter->data) == nullptr)
+			{
+				unionList.addToTail(iter->data);
+			}
+		}
+		return unionList;
+	}
+	void deleteAlterNodes()
+	{
+		for (Node<T>* iter = head; iter; iter = iter->next)
+		{
+
+		}
 	}
 };
-#endif // !LINKED_LIST_H
+#endif // !LINKED_LIST_H ;
