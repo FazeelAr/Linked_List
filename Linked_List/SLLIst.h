@@ -65,6 +65,7 @@ public:
 			{
 				delete head;
 				head = tail = nullptr;
+				return element;
 			}
 			Node<T>* temp = head;
 			head = head->next;
@@ -85,13 +86,11 @@ public:
 				return element;
 			}
 			Node<T>* temp = head, * iter = head;
-			for (; temp != tail; temp = temp->next)
-			{
-				iter = temp;
-			}
+			for (; temp->next != tail; temp = temp->next)
+			{}
 			delete tail;
 			tail = temp;
-			iter->next = nullptr;
+			tail->next = nullptr;
 			return element;
 		}
 		throw "\nList is Empty";

@@ -10,10 +10,9 @@ int main()
 	}
 	try
 	{
-		list.deleteAtTail();
-		for (Node<int>* temp = list.getHead(); temp; temp = temp->next)
+		for (int i = 0; i < 5;i++)
 		{
-			cout << temp->data << ' ';
+			cout<<list.deleteAtTail()<<'\n';
 		}
 	}
 	catch (const char* str)
