@@ -1,23 +1,8 @@
 #include "SLList.h"
 #include<forward_list>
-//int main()
-//{
-//	forward_list<int> list;
-//	list.push_front(1);
-//	for (int i = 0; i < 10; i++)
-//	{
-//		list.insert_after(list.end(), i + 1);
-//	}
-//	while (!list.empty())
-//	{
-//		cout << list.front() << ' ';
-//		list.pop_front();
-//	}
-//}
 int main()
 {
 	SLList<int> list{};
-	//list.addToHead(5);
 	for (int i = 0; i < 5; i++)
 	{
 		for(int j = 0; j<2;j++)
@@ -34,12 +19,16 @@ int main()
 		list2.addToTail(3);
 		list2.addToTail(5);
 		list2.addToTail(4);
-		list2.printList();
+		//list2.printList();
+		cout << list.removeNode(9);
+		list.removeNode(9);
+		list.removeNode(9);
+		list.removeNode(9);
 		//list = list.doUnion(list2);
 		//list.printList();
-		list2.removeDuplicates();
+		//list2.removeDuplicates();
 		cout << "\nAfter deleteing alternate nodes";
-		list2.printList();
+		list.printList();
 	}
 	catch (const char* str)
 	{

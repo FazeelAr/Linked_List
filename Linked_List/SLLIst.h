@@ -16,9 +16,9 @@ struct Node
 template<typename T>
 class SLList
 {
-public:
 	Node<T>* head;
 	Node<T>* tail;
+public:
 	SLList()
 	{
 		head = nullptr;
@@ -145,22 +145,30 @@ public:
 			iter = iter->next;
 		}
 	}
-	T removeNode(T e)
+	bool removeNode(T e)
 	{
-		Node<T>* iter = head, *prev = head;
+		if (isEmpty())
+		{
+			return false;
+		}
+		if (head->data == e)
+		{
+			deleteAtHead();
+			return true;
+		}
+		Node<T>* iter = head->next, *prev = head;
 		while (iter && iter->data != e)
 		{
-			prev = iter;
+			prev = prev->next;
 			iter = iter->next;
 		}
 		if (iter)
 		{
-			T elem = iter->data;
 			prev->next = iter->next;
 			delete iter;
-			return elem;
+			return true;
 		}
-		throw "\nElement not found";
+		return false;
 	}
 	SLList<T> doUnion(SLList<T>& list)
 	{
