@@ -1,12 +1,14 @@
 #ifndef DLLIST_H
 #define DLLIST_H
+#include<iostream>
+using namespace std;
 template<typename T>
-struct Node
+struct DNode
 {
 	T data;
-	Node<T>* next;
-	Node<T>* prev;
-	Node(T d, Node<T>* n = nullptr, Node<T>* p = nullptr)
+	DNode<T>* next;
+	DNode<T>* prev;
+	DNode(T d, DNode<T>* n = nullptr, DNode<T>* p = nullptr)
 	{
 		data = d;
 		next = n;
@@ -16,19 +18,23 @@ struct Node
 template<typename T>
 class DLList
 {
-	Node<T>* head;
-	Node<T>* tail;
+	DNode<T>* head;
+	DNode<T>* tail;
 public:
 	DLList() :head{ nullptr }, tail{ nullptr }{}
+	bool isEmpty()
+	{
+		return (head == nullptr && tail == nullptr) ? true : false;
+	}
 	void addToHead(T e)
 	{
 		if (head == nullptr)
 		{
-			head = tail = new Node<T>(e);
+			head = tail = new DNode<T>(e);
 		}
 		else
 		{
-			head = new Node<T>{ e,head };
+			head = new DNode<T>{ e,head };
 			head->next->prev = head;
 		}
 	}
@@ -36,16 +42,20 @@ public:
 	{
 		if (tail == nullptr)
 		{
-			head = tail = new Node<T>(e);
+			head = tail = new DNode<T>(e);
 		}
 		else
 		{
-			tail = new Node<T>{ e,nullptr,tail };
+			tail = new DNode<T>{ e,nullptr,tail };
 			tail->prev->next = tail;
 		}
 	}
 	T deleteFromTail()
 	{
+		if (isEmpty())
+		{
+			throw "\nList is empty";
+		}
 		T e = tail->data;
 		if (head == tail)
 		{
@@ -59,6 +69,10 @@ public:
 	}
 	T deleteFromHead()
 	{
+		if (isEmpty())
+		{
+			throw "\nList is empty";
+		}
 		T e = head->data;
 		if (head == tail)
 		{
@@ -69,6 +83,17 @@ public:
 		head = head->next;
 		delete head->prev;
 		head->prev = nullptr;
+	}
+	void display()
+	{
+		DNode<T>* iter = head;
+		cout << '\n';
+		while (iter)
+		{
+			cout << iter->data << ' ';
+			iter = iter->next;
+		}
+		cout << '\n';
 	}
 };
 #endif // !DLLIST_H
