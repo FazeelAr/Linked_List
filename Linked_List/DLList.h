@@ -95,5 +95,63 @@ public:
 		}
 		cout << '\n';
 	}
+	bool deleteNode(T e)
+	{
+		if (head == nullptr)
+		{
+			return false;
+		}
+		if (head->data == e)
+		{
+			deleteFromHead();
+			return true;
+		}
+		DNode<T>* iter = head;
+		while (iter && iter->data != e)
+		{
+			iter = iter->next;
+		}
+		if (iter)
+		{
+			if (iter == tail)
+			{
+				deleteFromTail();
+				return true;
+			}
+			iter->prev->next = iter->next;
+			iter->next->prev = iter->prev;
+			return true;
+		}
+		return false;
+	}
+	bool deleteNthNode(int n)
+	{
+		if (n <= 0)
+			return false;
+		if (n == 1)
+		{
+			deleteFromHead();
+			return true;
+		}
+		int i = 1;
+		DNode<T>* iter = head;
+		while (iter && i != n)
+		{
+			iter = iter->next;
+			i++;
+		}
+		if (iter)
+		{
+			if (iter == tail)
+			{
+				deleteFromTail();
+				return true;
+			}
+			iter->prev->next = iter->next;
+			iter->next->prev = iter->prev;
+			return true;
+		}
+		return false;
+	}
 };
 #endif // !DLLIST_H
