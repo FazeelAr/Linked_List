@@ -1,6 +1,7 @@
 #ifndef SL_LIST_H
 #define SL_LIST_H
 #include<iostream>
+#include<vector>
 using namespace std;
 template<typename T>
 struct Node
@@ -19,201 +20,261 @@ class SLList
 	Node<T>* head;
 	Node<T>* tail;
 public:
-	SLList()
+	SLList();
+	SLList(const SLList<T>& ref);
+	~SLList();
+	bool isEmpty();
+	void addToHead(T e);
+	void addToTail(T e);
+	Node<T>* getTail();
+	Node<T>* getHead();
+	T deleteAtHead();
+	T deleteAtTail();
+	Node<T>* searchNode(T element);
+	void display();
+	bool removeNode(T e);
+	SLList<T> doUnion(SLList<T>& list);
+	void deleteAlterNodes();
+	void removeDuplicates();
+	void reverseList();
+};
+template<typename T>
+SLList<T>::SLList()
+{
+	head = nullptr;
+	tail = nullptr;
+}
+template<typename T>
+SLList<T>::SLList(const SLList<T>& ref) : SLList()
+{
+	if (!ref.head || !ref.tail)
 	{
-		head = nullptr;
-		tail = nullptr;
+		return;
 	}
-	SLList(const SLList<T>& ref): SLList()
-	{
-		if (!ref.head || !ref.tail)
-		{
-			return;
-		}
-		Node<T>* iter = ref.head;
-		while (iter)
-		{
-			if (tail != nullptr)
-			{
-				tail->next = new Node<T>(iter->data);
-				tail = tail->next;
-			}
-			else
-			{
-				tail = head = new Node<T>(iter->data);
-			}
-			iter = iter->next;
-		}
-	}
-	~SLList()
-	{
-		while (head)
-		{
-			Node<T>* temp = head;
-			head = head->next;
-			delete temp;
-		}
-		head = tail = nullptr;
-	}
-	bool isEmpty()
-	{
-		return (head == nullptr && tail == nullptr) ? true : false;
-	}
-	void addToHead(T e)
-	{
-		head = new Node<T>(e, head);
-		if (tail == nullptr)
-		{
-			tail = head;
-		}
-	}
-	void addToTail(T e)
+	Node<T>* iter = ref.head;
+	while (iter)
 	{
 		if (tail != nullptr)
 		{
-			tail->next = new Node<T>(e);
+			tail->next = new Node<T>(iter->data);
 			tail = tail->next;
 		}
 		else
 		{
-			tail = head = new Node<T>(e);
+			tail = head = new Node<T>(iter->data);
 		}
+		iter = iter->next;
 	}
-	Node<T>* getTail()
+}
+template<typename T>
+SLList<T>::~SLList()
+{
+	while (head)
 	{
-		return tail;
+		Node<T>* temp = head;
+		head = head->next;
+		delete temp;
 	}
-	Node<T>* getHead()
+	head = tail = nullptr;
+}
+template<typename T>
+bool SLList<T>::isEmpty()
+{
+	return (head == nullptr && tail == nullptr) ? true : false;
+}
+template<typename T>
+void SLList<T>::addToHead(T e)
+{
+	head = new Node<T>(e, head);
+	if (tail == nullptr)
 	{
-		return head;
+		tail = head;
 	}
-	T deleteAtHead()
+}
+template<typename T>
+void SLList<T>::addToTail(T e)
+{
+	if (tail != nullptr)
 	{
-		if (!isEmpty())
+		tail->next = new Node<T>(e);
+		tail = tail->next;
+	}
+	else
+	{
+		tail = head = new Node<T>(e);
+	}
+}
+template<typename T>
+Node<T>* SLList<T>::getTail()
+{
+	return tail;
+}
+template<typename T>
+Node<T>* SLList<T>::getHead()
+{
+	return head;
+}
+template<typename T>
+T SLList<T>::deleteAtHead()
+{
+	if (!isEmpty())
+	{
+		T element = head->data;
+		if (head == tail)
 		{
-			T element = head->data;
-			if (head == tail)
-			{
-				delete head;
-				head = tail = nullptr;
-				return element;
-			}
-			Node<T>* temp = head;
-			head = head->next;
-			delete temp;
+			delete head;
+			head = tail = nullptr;
 			return element;
 		}
-		throw "\nList is empty";
+		Node<T>* temp = head;
+		head = head->next;
+		delete temp;
+		return element;
 	}
-	T deleteAtTail()
+	throw "\nList is empty";
+}
+template<typename T>
+T SLList<T>::deleteAtTail()
+{
+	if (!isEmpty())
 	{
-		if (!isEmpty())
+		T element = tail->data;
+		if (head == tail)
 		{
-			T element = tail->data;
-			if (head == tail)
-			{
-				delete tail;
-				tail = head = nullptr;
-				return element;
-			}
-			Node<T>* temp = head, * iter = head;
-			for (; temp->next != tail; temp = temp->next)
-			{}
 			delete tail;
-			tail = temp;
-			tail->next = nullptr;
+			tail = head = nullptr;
 			return element;
 		}
-		throw "\nList is Empty";
+		Node<T>* temp = head, * iter = head;
+		for (; temp->next != tail; temp = temp->next)
+		{
+		}
+		delete tail;
+		tail = temp;
+		tail->next = nullptr;
+		return element;
 	}
-	Node<T>* searchNode(T element)
+	throw "\nList is Empty";
+}
+template<typename T>
+Node<T>* SLList<T>::searchNode(T element)
+{
+	Node<T>* iter = head;
+	while (iter && iter->data != element)
 	{
-		Node<T>* iter = head;
-		while (iter && iter->data != element)
-		{
-			iter = iter->next;
-		}
-		return (iter == nullptr) ? nullptr : iter;
+		iter = iter->next;
 	}
-	void printList()
+	return (iter == nullptr) ? nullptr : iter;
+}
+template<typename T>
+void SLList<T>::display()
+{
+	cout << '\n';
+	Node<T>* iter = head;
+	while (iter)
 	{
-		cout << '\n';
-		Node<T>* iter = head;
-		while (iter)
-		{
-			cout << iter->data << ' ';
-			iter = iter->next;
-		}
+		cout << iter->data << ' ';
+		iter = iter->next;
 	}
-	bool removeNode(T e)
+}
+template<typename T>
+bool SLList<T>::removeNode(T e)
+{
+	if (isEmpty())
 	{
-		if (isEmpty())
-		{
-			return false;
-		}
-		if (head->data == e)
-		{
-			deleteAtHead();
-			return true;
-		}
-		Node<T>* iter = head->next, *prev = head;
-		while (iter && iter->data != e)
-		{
-			prev = prev->next;
-			iter = iter->next;
-		}
-		if (iter)
-		{
-			prev->next = iter->next;
-			delete iter;
-			return true;
-		}
 		return false;
 	}
-	SLList<T> doUnion(SLList<T>& list)
+	if (head->data == e)
 	{
-		SLList<T> unionList{ *this };
-		for (Node<T>* iter = list.getHead(); iter; iter = iter->next)
+		deleteAtHead();
+		return true;
+	}
+	Node<T>* iter = head->next, * prev = head;
+	while (iter && iter->data != e)
+	{
+		prev = prev->next;
+		iter = iter->next;
+	}
+	if (iter)
+	{
+		prev->next = iter->next;
+		delete iter;
+		return true;
+	}
+	return false;
+}
+template<typename T>
+SLList<T> SLList<T>::doUnion(SLList<T>& list)
+{
+	SLList<T> unionList{ *this };
+	for (Node<T>* iter = list.getHead(); iter; iter = iter->next)
+	{
+		if (unionList.searchNode(iter->data) == nullptr)
 		{
-			if (unionList.searchNode(iter->data) == nullptr)
+			unionList.addToTail(iter->data);
+		}
+	}
+	return unionList;
+}
+template<typename T>
+void SLList<T>::deleteAlterNodes()
+{
+	Node<T>* iter = head;
+	while (iter && iter->next)
+	{
+		Node<T>* prev = iter->next;
+		iter->next = iter->next->next;
+		delete prev;
+		iter = iter->next;
+	}
+}
+template<typename T>
+void SLList<T>::removeDuplicates()
+{
+	Node<T>* curr = head;
+	while (curr)
+	{
+		Node<T>* next = curr;
+		while (next->next)
+		{
+			if (curr->data == next->next->data)
 			{
-				unionList.addToTail(iter->data);
+				Node<T>* duplicate = next->next;
+				next->next = next->next->next;
+				delete duplicate;
+			}
+			else
+			{
+				next = next->next;
 			}
 		}
-		return unionList;
+		curr = curr->next;
 	}
-	void deleteAlterNodes()
+}
+template<typename T>
+void SLList<T>::reverseList()
+{
+	if (!head)
 	{
-		Node<T>* iter = head;
-		while(iter && iter->next)
-		{
-			Node<T>* prev = iter->next;
-			iter->next = iter->next->next;
-			delete prev;
-			iter = iter->next;
-		}
+		return;
 	}
-	void removeDuplicates()
+	Node<T>* iter = head;
+	vector<Node<T>*> add;
+	while (iter != tail)
 	{
-		Node<T>* curr = head;
-		while (curr)
-		{
-			Node<T>* next = curr;
-			while (next->next)
-			{
-				if (curr->data == next->next->data)
-				{
-					Node<T>* duplicate = next->next;
-					next->next = next->next->next;
-					delete duplicate;
-				}
-				else
-				{
-					next = next->next;
-				}
-			}
-			curr = curr->next;
-		}
+		add.push_back(iter);
+		iter = iter->next;
 	}
-};
+	iter = tail;
+	Node<T>* temp = head;
+	int i = add.size() - 1;
+	for (int i = add.size() - 1; i >= 0; i--)
+	{
+		iter->next = add[i];
+		iter = iter->next;
+	}
+	head = tail;
+	tail = iter;
+	tail->next = nullptr;
+}
 #endif // !LINKED_LIST_H ;

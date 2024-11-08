@@ -74,17 +74,19 @@ ListNode* addTwoNumbers(ListNode* l1, ListNode* l2)
 int main()
 {
 	DLList<int> list{};
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 10; i++)
 	{
 		list.addToHead(i + 5);
-		list.addToTail(i + 5);
+		//list.addToTail(i + 5);
 	}
 	try
 	{
+        DLList<int> list1{list};
         //list.deleteFromHead();
 		list.display();
+        list1.display();
         //list.deleteNthNode(5);
-		list.display();
+		//list.printList();
 	}
 	catch (...)
 	{
