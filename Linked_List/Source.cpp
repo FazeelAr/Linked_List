@@ -73,23 +73,16 @@ ListNode* addTwoNumbers(ListNode* l1, ListNode* l2)
 }
 int main()
 {
-	DLList<int> list{};
-	for (int i = 0; i < 10; i++)
-	{
-		list.addToHead(i + 5);
-		//list.addToTail(i + 5);
-	}
-	try
-	{
-        DLList<int> list1{list};
-        //list.deleteFromHead();
-		list.display();
-        list1.display();
-        //list.deleteNthNode(5);
-		//list.printList();
-	}
-	catch (...)
-	{
-        cout << "\nerror occured";
-	}
+    SLList<int> list1{}, list2;
+    list1.addToTail(1);
+    list1.addToTail(2);
+    list1.addToTail(3);
+    list1.addToTail(4);
+    list1.addToTail(5);
+    list1.addToTail(6);
+    list2.addToTail(1);
+    list2.addToTail(2);
+    cout << list1.getHead()->next->next->next;
+    list2.addToTail(list1.getHead()->next->next);
+    list1.display();
 }

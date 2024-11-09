@@ -25,6 +25,7 @@ public:
 	~SLList();
 	bool isEmpty();
 	void addToHead(T e);
+	void addToTail(Node<T>* p);
 	void addToTail(T e);
 	Node<T>* getTail();
 	Node<T>* getHead();
@@ -37,13 +38,16 @@ public:
 	void deleteAlterNodes();
 	void removeDuplicates();
 	void reverseList();
+	bool isJoining(SLList<T>& list);
 };
+
 template<typename T>
 SLList<T>::SLList()
 {
 	head = nullptr;
 	tail = nullptr;
 }
+
 template<typename T>
 SLList<T>::SLList(const SLList<T>& ref) : SLList()
 {
@@ -66,6 +70,7 @@ SLList<T>::SLList(const SLList<T>& ref) : SLList()
 		iter = iter->next;
 	}
 }
+
 template<typename T>
 SLList<T>::~SLList()
 {
@@ -77,11 +82,13 @@ SLList<T>::~SLList()
 	}
 	head = tail = nullptr;
 }
+
 template<typename T>
 bool SLList<T>::isEmpty()
 {
 	return (head == nullptr && tail == nullptr) ? true : false;
 }
+
 template<typename T>
 void SLList<T>::addToHead(T e)
 {
@@ -91,6 +98,7 @@ void SLList<T>::addToHead(T e)
 		tail = head;
 	}
 }
+
 template<typename T>
 void SLList<T>::addToTail(T e)
 {
@@ -104,16 +112,35 @@ void SLList<T>::addToTail(T e)
 		tail = head = new Node<T>(e);
 	}
 }
+
+template<typename T>
+void SLList<T>::addToTail(Node<T>* p)
+{
+	if (isEmpty())
+	{
+		tail = head = p;
+		return;
+	}
+	tail->next = p;
+	Node<T>* iter = p;
+	while (iter)
+	{
+		iter = iter->next;
+	}
+	tail = iter;
+}
 template<typename T>
 Node<T>* SLList<T>::getTail()
 {
 	return tail;
 }
+
 template<typename T>
 Node<T>* SLList<T>::getHead()
 {
 	return head;
 }
+
 template<typename T>
 T SLList<T>::deleteAtHead()
 {
@@ -133,6 +160,7 @@ T SLList<T>::deleteAtHead()
 	}
 	throw "\nList is empty";
 }
+
 template<typename T>
 T SLList<T>::deleteAtTail()
 {
@@ -156,6 +184,7 @@ T SLList<T>::deleteAtTail()
 	}
 	throw "\nList is Empty";
 }
+
 template<typename T>
 Node<T>* SLList<T>::searchNode(T element)
 {
@@ -166,6 +195,7 @@ Node<T>* SLList<T>::searchNode(T element)
 	}
 	return (iter == nullptr) ? nullptr : iter;
 }
+
 template<typename T>
 void SLList<T>::display()
 {
@@ -177,6 +207,7 @@ void SLList<T>::display()
 		iter = iter->next;
 	}
 }
+
 template<typename T>
 bool SLList<T>::removeNode(T e)
 {
@@ -203,6 +234,7 @@ bool SLList<T>::removeNode(T e)
 	}
 	return false;
 }
+
 template<typename T>
 SLList<T> SLList<T>::doUnion(SLList<T>& list)
 {
@@ -216,6 +248,7 @@ SLList<T> SLList<T>::doUnion(SLList<T>& list)
 	}
 	return unionList;
 }
+
 template<typename T>
 void SLList<T>::deleteAlterNodes()
 {
@@ -228,6 +261,7 @@ void SLList<T>::deleteAlterNodes()
 		iter = iter->next;
 	}
 }
+
 template<typename T>
 void SLList<T>::removeDuplicates()
 {
@@ -251,6 +285,7 @@ void SLList<T>::removeDuplicates()
 		curr = curr->next;
 	}
 }
+
 template<typename T>
 void SLList<T>::reverseList()
 {
@@ -276,5 +311,33 @@ void SLList<T>::reverseList()
 	head = tail;
 	tail = iter;
 	tail->next = nullptr;
+}
+
+template<typename T>
+bool SLList<T>::isJoining(SLList<T>& list)
+{
+	if (list.isEmpty()||!head)
+	{
+		return false;
+	}
+	Node<T>* iter1 = head, *iter2 = list.head;
+	while ((iter1 && iter2) && iter2!=iter1)
+	{
+		iter1 = iter1->next;
+		iter2 = iter2->next;
+		if (!iter1 && !iter2)
+		{
+			return false;
+		}
+		if (iter1 == nullptr)
+		{
+			iter1 = list.head;
+		}
+		if (iter2 == nullptr)
+		{
+			iter2 = head;
+		}
+	}
+	return true;
 }
 #endif // !LINKED_LIST_H ;
