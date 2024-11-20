@@ -121,13 +121,14 @@ void SLList<T>::addToTail(Node<T>* p)
 		tail = head = p;
 		return;
 	}
+	cout << p->data << '\n';
 	tail->next = p;
-	Node<T>* iter = p;
+	/*Node<T>* iter = p;
 	while (iter)
 	{
 		iter = iter->next;
 	}
-	tail = iter;
+	tail = iter;*/
 }
 template<typename T>
 Node<T>* SLList<T>::getTail()
@@ -321,7 +322,7 @@ bool SLList<T>::isJoining(SLList<T>& list)
 		return false;
 	}
 	Node<T>* iter1 = head, *iter2 = list.head;
-	while ((iter1 && iter2) && iter2!=iter1)
+	while (iter2!=iter1)
 	{
 		iter1 = iter1->next;
 		iter2 = iter2->next;

@@ -26,5 +26,8 @@
     <ClInclude Include="DLList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CSLList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
