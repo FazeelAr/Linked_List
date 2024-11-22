@@ -121,7 +121,7 @@ void SLList<T>::addToTail(Node<T>* p)
 		tail = head = p;
 		return;
 	}
-	cout << p->data << '\n';
+	//cout << p->data << '\n';
 	tail->next = p;
 	/*Node<T>* iter = p;
 	while (iter)
