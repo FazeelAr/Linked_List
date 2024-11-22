@@ -166,5 +166,21 @@ public:
 		}
 		while (iter != tail->next);
 	}
+	~CSLList()
+	{
+		if (!tail)
+		{
+			return;
+		}
+		ListNode<T>* iter = tail->next, *temp;
+		while (iter != tail)
+		{
+			temp = iter;
+			iter = iter->next;
+			delete temp;
+		}
+		delete tail;
+		tail = nullptr;
+	}
 };
 #endif // !CSLList_H

@@ -6,17 +6,17 @@ int main()
     try
     {
         /*SLList<int> list1{}, list2;
-    list1.addToTail(1);
-    list1.addToTail(2);
-    list1.addToTail(3);
-    list1.addToTail(4);
-    list1.addToTail(5);
-    list1.addToTail(6);
-    list2.addToTail(1);
-    list2.addToTail(2);*/
-    //cout << list1.getHead()->next->next->next;
-    //list2.addToTail(list1.getHead()->next->next);
-    //list1.display();
+        list1.addToTail(1);
+        list1.addToTail(2);
+        list1.addToTail(3);
+        list1.addToTail(4);
+        list1.addToTail(5);
+        list1.addToTail(6);
+        list2.addToTail(1);
+        list2.addToTail(2);*/
+        //cout << list1.getHead()->next->next->next;
+        //list2.addToTail(list1.getHead()->next->next);
+        //list1.display();
         CSLList<int> list{};
         list.addToHead(1);
         list.addToHead(2);
