@@ -29,6 +29,10 @@ public:
 	void addToTail(T e);
 	Node<T>* getTail();
 	Node<T>* getHead();
+	void setHead(Node<T>* hd)
+	{
+		head = hd;
+	}
 	T deleteAtHead();
 	T deleteAtTail();
 	Node<T>* searchNode(T element);
