@@ -14,16 +14,9 @@ int main()
         list.addToTail(8);
         list.addToTail(9);
         list.addToTail(10);
+        list.deleteNthNode(2);
+        list.deleteNode(5);
         list.print();
-        /*list.deleteFromTail();
-        list.deleteFromTail();
-        list.deleteFromTail();
-        list.deleteFromTail();
-        list.deleteFromHead();
-        list.deleteFromHead();
-        list.deleteFromHead();*/
-        //cout << '\n' << list.deleteNthNode(10);
-        //list.print();
     }
     catch (const char* s)
     {
