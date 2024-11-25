@@ -172,11 +172,11 @@ public:
 		{
 			return;
 		}
-		ListNode<T>* iter = tail->next, *temp;
-		while (iter != tail)
+		ListNode<T>* temp;
+		while (tail->next != tail)
 		{
-			temp = iter;
-			iter = iter->next;
+			temp = tail->next;
+			tail->next = temp->next;
 			delete temp;
 		}
 		delete tail;
